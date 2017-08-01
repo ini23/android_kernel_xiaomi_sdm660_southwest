@@ -439,7 +439,7 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type, 
 	unsigned quirks;
 	s32 min, max;
 	int error;
-
+	
 	if (dev->battery)
 		return 0;	/* already initialized? */
 
