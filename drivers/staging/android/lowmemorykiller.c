@@ -50,6 +50,8 @@
 extern int extra_free_kbytes;
 
 static u32 lowmem_debug_level = 1;
+extern int extra_free_kbytes;
+
 static short lowmem_adj[6] = {
 	0,
 	1,
