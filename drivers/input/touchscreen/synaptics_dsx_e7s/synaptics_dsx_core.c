@@ -922,6 +922,8 @@ static ssize_t synaptics_rmi4_wake_gesture_store(struct device *dev,
 	if (sscanf(buf, "%u", &input) != 1)
 		return -EINVAL;
 
+	input_event(rmi4_data->input_dev, EV_SYN, SYN_CONFIG, input ? WAKEUP_ON : WAKEUP_OFF);
+
 	input = input > 0 ? 1 : 0;
 
 	if (rmi4_data->suspend && input != rmi4_data->enable_wakeup_gesture)
