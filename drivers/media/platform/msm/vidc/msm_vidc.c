@@ -1091,7 +1091,6 @@ int msm_vidc_dqbuf(void *instance, struct v4l2_buffer *b)
 		b->m.planes[i].m.userptr = buffer_info->uvaddr[i];
 		b->m.planes[i].reserved[0] = buffer_info->fd[i];
 		b->m.planes[i].reserved[1] = buffer_info->buff_off[i];
-
 		b->m.planes[i].reserved[2] = buffer_info->crop_data.nLeft;
 		b->m.planes[i].reserved[3] = buffer_info->crop_data.nTop;
 		b->m.planes[i].reserved[4] = buffer_info->crop_data.nWidth;
