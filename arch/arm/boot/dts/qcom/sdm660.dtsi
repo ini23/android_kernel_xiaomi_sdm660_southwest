@@ -328,12 +328,6 @@
 		#size-cells = <2>;
 		ranges;
 
-		wlan_msa_guard: wlan_msa_guard@85600000 {
-			compatible = "removed-dma-pool";
-			no-map;
-			reg = <0x0 0x85600000 0x0 0x100000>;
-		};
-
 		wlan_msa_mem: wlan_msa_mem@85700000 {
 			compatible = "removed-dma-pool";
 			no-map;
@@ -424,8 +418,7 @@
 			reg = <0x0 0xA0000000 0x0 0x00400000>;
 			label = "pstore_reserve_mem";
 		};
-	};
-
+    };
 	bluetooth: bt_wcn3990 {
 		compatible = "qca,wcn3990";
 		qca,bt-vdd-core-supply = <&pm660_l9>;
