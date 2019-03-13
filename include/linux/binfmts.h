@@ -136,4 +136,13 @@ static inline bool task_is_booster(struct task_struct *tsk)
 	       !strcmp(comm, "init.qcom.post_");
 }
 
+static inline bool tsk_is_booster(struct task_struct *tsk)
+{
+	char comm[sizeof(tsk->comm)];
+
+	get_task_comm(comm, tsk);
+	return !strcmp(comm, "init") || !strcmp(comm, "NodeLooperThrea") ||
+	       !strcmp(comm, "power@1.3-servi");
+}
+
 #endif /* _LINUX_BINFMTS_H */
