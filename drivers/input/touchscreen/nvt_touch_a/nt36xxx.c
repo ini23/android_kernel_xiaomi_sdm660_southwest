@@ -196,7 +196,6 @@ static const struct file_operations nvt_gesture_fops_wake = {
 	.read = seq_read,
 	.llseek = seq_lseek,
 };
-#define NVT_GESTURE_NAME "nvt_wake_gesture"
 
 #endif
 
