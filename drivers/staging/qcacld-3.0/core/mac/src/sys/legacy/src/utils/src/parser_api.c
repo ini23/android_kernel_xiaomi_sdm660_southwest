@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2012-2018 The Linux Foundation. All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -1215,9 +1215,6 @@ populate_dot11f_ext_cap(tpAniSirGlobal pMac,
 	if (psessionEntry && psessionEntry->enable_bcast_probe_rsp)
 		p_ext_cap->fils_capability = 1;
 
-	if (pMac->roam.configParam.btm_offload_config & BTM_OFFLOAD_ENABLED_MASK)
-		p_ext_cap->bss_transition = 1;
-
 	/* Need to calulate the num_bytes based on bits set */
 	if (pDot11f->present)
 		pDot11f->num_bytes = lim_compute_ext_cap_ie_length(pDot11f);
@@ -1476,15 +1473,16 @@ populate_dot11f_qos_caps_ap(tpAniSirGlobal pMac,
 	pDot11f->present = 1;
 } /* End PopulatedDot11fQOSCaps. */
 
-void populate_dot11f_qos_caps_station(tpAniSirGlobal pMac, tpPESession pe_session,
-				      tDot11fIEQOSCapsStation *pDot11f)
+void
+populate_dot11f_qos_caps_station(tpAniSirGlobal pMac, tpPESession pe_session,
+				 tDot11fIEQOSCapsStation *pDot11f)
 {
 	uint32_t val = 0;
 
 	if (wlan_cfg_get_int(pMac, WNI_CFG_MAX_SP_LENGTH, &val) != eSIR_SUCCESS)
 		pe_err("could not retrieve Max SP Length");
 
-	pDot11f->more_data_ack = 0;
+		pDot11f->more_data_ack = 0;
 	pDot11f->max_sp_length = (uint8_t) val;
 	pDot11f->qack = 0;
 
@@ -1983,8 +1981,8 @@ void populate_dot11f_wmm_info_station_per_session(tpAniSirGlobal pMac,
 	pInfo->acbe_uapsd =
 		LIM_UAPSD_GET(ACBE, psessionEntry->gUapsdPerAcBitmask);
 
-		if (wlan_cfg_get_int(pMac, WNI_CFG_MAX_SP_LENGTH, &val) != eSIR_SUCCESS)
-			pe_err("could not retrieve Max SP Length");
+	if (wlan_cfg_get_int(pMac, WNI_CFG_MAX_SP_LENGTH, &val) != eSIR_SUCCESS)
+		pe_err("could not retrieve Max SP Length");
 
 		pInfo->max_sp_length = (uint8_t) val;
 	pInfo->present = 1;
