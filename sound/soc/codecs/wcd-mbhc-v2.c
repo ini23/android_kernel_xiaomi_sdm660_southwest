@@ -3065,6 +3065,8 @@ int wcd_mbhc_init(struct wcd_mbhc *mbhc, struct snd_soc_codec *codec,
 	const char *gnd_switch = "qcom,msm-mbhc-gnd-swh";
 	impedance_det_en = true;
 
+	impedance_det_en = true;
+
 	pr_debug("%s: enter\n", __func__);
 
 #ifdef CONFIG_MACH_XIAOMI_CLOVER
