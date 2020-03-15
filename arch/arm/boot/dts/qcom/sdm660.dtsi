@@ -72,7 +72,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x0>;
-                        clock-frequency = <1843200000>;
+            clock-frequency = <1843200000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
@@ -105,7 +105,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x1>;
-                        clock-frequency = <1843200000>;
+            clock-frequency = <1843200000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
@@ -132,7 +132,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x2>;
-                        clock-frequency = <1843200000>;
+            clock-frequency = <1843200000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
@@ -159,7 +159,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x3>;
-                        clock-frequency = <1843200000>;
+            clock-frequency = <1843200000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
@@ -186,7 +186,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x100>;
-                        clock-frequency = <2208000000>;
+            clock-frequency = <2208000000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile1>;
@@ -217,7 +217,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x101>;
-                        clock-frequency = <2208000000>;
+            clock-frequency = <2208000000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile2>;
@@ -244,7 +244,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x102>;
-                        clock-frequency = <2208000000>;
+            clock-frequency = <2208000000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile3>;
@@ -271,7 +271,7 @@
 			device_type = "cpu";
 			compatible = "arm,kryo";
 			reg = <0x0 0x103>;
-                        clock-frequency = <2208000000>;
+            clock-frequency = <2208000000>;
 			enable-method = "psci";
 			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile4>;
