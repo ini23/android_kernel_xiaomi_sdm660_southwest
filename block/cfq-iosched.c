@@ -6,6 +6,7 @@
  *
  *  Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
  */
+#include <linux/binfmts.h>
 #include <linux/module.h>
 #include <linux/slab.h>
 #include <linux/blkdev.h>
@@ -1890,6 +1891,40 @@ static int cfq_set_leaf_weight(struct cgroup_subsys_state *css,
 			       struct cftype *cft, u64 val)
 {
 	return __cfq_set_weight(css, val, false, false, true);
+}
+
+static int cfq_set_group_idle(struct cgroup_subsys_state *css,
+			       struct cftype *cft, u64 val)
+{
+	struct blkcg *blkcg = css_to_blkcg(css);
+	struct cfq_group_data *cfqgd;
+	struct blkcg_gq *blkg;
+	int ret = 0;
+
+	if (task_is_booster(current))
+		return ret;
+
+	spin_lock_irq(&blkcg->lock);
+	cfqgd = blkcg_to_cfqgd(blkcg);
+	if (!cfqgd) {
+		ret = -EINVAL;
+		goto out;
+	}
+
+	cfqgd->group_idle = val * NSEC_PER_USEC;
+
+	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
+		struct cfq_group *cfqg = blkg_to_cfqg(blkg);
+
+		if (!cfqg)
+			continue;
+
+		cfqg->group_idle = cfqgd->group_idle;
+	}
+
+out:
+	spin_unlock_irq(&blkcg->lock);
+	return ret;
 }
 
 static int cfqg_print_stat(struct seq_file *sf, void *v)
