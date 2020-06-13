@@ -65,6 +65,7 @@ CONFIG_DEFAULT_MMAP_MIN_ADDR=32768
 CONFIG_CMA=y
 CONFIG_CMA_DEBUGFS=y
 CONFIG_ZSMALLOC=y
+CONFIG_CLEANCACHE=y
 CONFIG_BALANCE_ANON_FILE_RECLAIM=y
 CONFIG_FORCE_ALLOC_FROM_DMA_ZONE=y
 CONFIG_PROCESS_RECLAIM=y
@@ -781,3 +782,22 @@ CONFIG_CRYPTO_AES_ARM64_CE_BLK=y
 CONFIG_CRYPTO_AES_ARM64_NEON_BLK=y
 CONFIG_CRYPTO_CRC32_ARM64=y
 CONFIG_QMI_ENCDEC=y
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:arch/arm64/configs/platina_defconfig
+<<<<<<< HEAD:arch/arm64/configs/platina_defconfig
+=======
+CONFIG_USB_CONFIGFS_MASS_STORAGE=y
+CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y
+<<<<<<< HEAD:arch/arm64/configs/platina_defconfig
+>>>>>>> d6c16bf7232b... defconfig: Enable WQ_POWER_EFFICIENT_DEFAULT:arch/arm64/configs/clover_defconfig
+=======
+CONFIG_CPU_FREQ_SWITCH_PROFILER=y
+>>>>>>> 1db85c2ae0a2... configs: Enable CONFIG_CPU_FREQ_SWITCH_PROFILER:arch/arm64/configs/clover_defconfig
+=======
+CONFIG_CGROUP_MEM_RES_CTLR=y
+CONFIG_CGROUP_MEM_RES_CTLR_SWAP=y
+CONFIG_ZCACHE=y
+CONFIG_ZRAM_LZ4_COMPRESS=y
+>>>>>>> a1cc14abe0f3... config: improved zRAM & enable zCACHE swap:arch/arm64/configs/clover_defconfig
+>>>>>>> f0ce9299f03a (config: improved zRAM & enable zCACHE swap)
