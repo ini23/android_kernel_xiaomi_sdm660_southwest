@@ -482,7 +482,6 @@ int q6core_get_service_version(uint32_t service_id,
 	pr_err("%s: No service matching service ID %d\n", __func__, service_id);
 	return -EINVAL;
 }
-EXPORT_SYMBOL(q6core_get_service_version);
 
 size_t q6core_get_fwk_version_size(uint32_t service_id)
 {
@@ -539,8 +538,6 @@ size_t q6core_get_fwk_version_size(uint32_t service_id)
 done:
 	return ret;
 }
-EXPORT_SYMBOL(q6core_get_fwk_version_size);
-
 #else
 int q6core_get_service_version(uint32_t service_id,
 			       struct avcs_fwk_ver_info *ver_info,
@@ -548,6 +545,9 @@ int q6core_get_service_version(uint32_t service_id,
 size_t q6core_get_fwk_version_size(uint32_t service_id)
 	{ return -1; }
 #endif
+EXPORT_SYMBOL(q6core_get_service_version);
+EXPORT_SYMBOL(q6core_get_fwk_version_size);
+
 int32_t core_set_license(uint32_t key, uint32_t module_id)
 {
 	struct avcs_cmd_set_license *cmd_setl = NULL;
