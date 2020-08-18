@@ -1157,7 +1157,7 @@ static int fg_get_batt_profile(struct fg_chip *chip)
 	else
 		if (is_poweroff_charge) {
 			if (hwc_check_india)
-				chip->bp.fastchg_curr_ma = 2200;
+				chip->bp.fastchg_curr_ma = 2300;
 			else
 				chip->bp.fastchg_curr_ma = 2300;
 		}
