@@ -111,6 +111,7 @@ CONFIG_INET_IPCOMP=y
 # CONFIG_INET_LRO is not set
 CONFIG_INET_UDP_DIAG=y
 CONFIG_INET_DIAG_DESTROY=y
+<<<<<<< HEAD
 <<<<<<< HEAD:arch/arm64/configs/tulip_defconfig
 =======
 CONFIG_TCP_CONG_ADVANCED=y
@@ -131,6 +132,13 @@ CONFIG_TCP_CONG_ILLINOIS=y
 CONFIG_TCP_CONG_SOCIOPATH=y
 CONFIG_DEFAULT_TCP_CONG="cubic"
 >>>>>>> 1838e8c08b72... TCP: Add Sociopath:arch/arm64/configs/X01BD_defconfig
+=======
+CONFIG_TCP_CONG_ADVANCED=y
+CONFIG_TCP_CONG_WESTWOOD=y
+# CONFIG_TCP_CONG_HTCP is not set
+# CONFIG_TCP_CONG_BIC is not set
+CONFIG_DEFAULT_WESTWOOD=y
+>>>>>>> 6eae8339a9b2... defconfig: xiaomi: Enable TCP advanced & set as westwood default TCP
 CONFIG_IPV6_ROUTER_PREF=y
 CONFIG_IPV6_ROUTE_INFO=y
 CONFIG_IPV6_OPTIMISTIC_DAD=y
