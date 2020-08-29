@@ -635,7 +635,7 @@ config TCP_CONG_CDG
 
 config TCP_CONG_BBR
 	tristate "BBR TCP"
-	default n
+	default m
 	---help---
 
 	BBR (Bottleneck Bandwidth and RTT) TCP congestion control aims to
@@ -709,6 +709,7 @@ config DEFAULT_TCP_CONG
 	default "dctcp" if DEFAULT_DCTCP
 	default "cdg" if DEFAULT_CDG
 	default "cubic"
+	default "bbr" if DEFAULT_BBR
 
 config TCP_MD5SIG
 	bool "TCP: MD5 Signature Option support (RFC2385)"
