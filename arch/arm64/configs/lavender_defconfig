@@ -430,7 +430,10 @@ CONFIG_MSM_BCL_PERIPHERAL_CTL=y
 CONFIG_QPNP_SMB2=y
 CONFIG_SMB138X_CHARGER=y
 CONFIG_MSM_PM=y
+<<<<<<< HEAD
 # CONFIG_APSS_CORE_EA is not set
+=======
+>>>>>>> 56d60d7a7075 (defconfig: xiaomi: Disable Qcom spesific power aware driver)
 CONFIG_MSM_APM=y
 CONFIG_MSM_IDLE_STATS=y
 CONFIG_SENSORS_QPNP_ADC_VOLTAGE=y
