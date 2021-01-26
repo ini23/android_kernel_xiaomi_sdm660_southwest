@@ -63,7 +63,6 @@
 	qcom,lra-hw-auto-resonance;
 };
 
-
 /* msm-audio.dtsi wayne specific diff */
 &int_codec {
 	qcom,wsa-disable;

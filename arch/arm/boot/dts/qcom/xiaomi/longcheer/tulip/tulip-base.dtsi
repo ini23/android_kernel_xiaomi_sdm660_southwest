@@ -28,6 +28,11 @@
 	qcom,fg-auto-recharge-soc;
 };
 
+&pm660_haptics {
+	qcom,actuator-type = "erm";
+	qcom,vmax-mv = <3000>;
+};
+
 /* sdm660-mtp.dtsi tulip specific diff */
 &mtp_batterydata {
 	/delete-node/ qcom,itech_3000mah;
