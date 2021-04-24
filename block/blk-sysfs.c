@@ -10,6 +10,7 @@
 #include <linux/blktrace_api.h>
 #include <linux/blk-mq.h>
 #include <linux/blk-cgroup.h>
+#include <linux/binfmts.h>
 
 #include "blk.h"
 #include "blk-mq.h"
@@ -91,6 +92,9 @@ queue_ra_store(struct request_queue *q, const char *page, size_t count)
 		return ret;
 	if (ra_kb < 2048)
 		ra_kb = 2048;
+
+	if (task_is_booster(current))
+		ra_kb = VM_MAX_READAHEAD;
 
 	q->backing_dev_info->ra_pages = ra_kb >> (PAGE_CACHE_SHIFT - 10);
 
