@@ -371,7 +371,12 @@ CONFIG_CLD_LL_CORE=y
 CONFIG_CNSS_GENL=y
 # CONFIG_INPUT_MOUSEDEV is not set
 CONFIG_INPUT_EVDEV=y
+<<<<<<< HEAD
 CONFIG_INPUT_HALL_SENSOR_E7S=y
+=======
+# CONFIG_INPUT_EVBUG is not set
+CONFIG_INPUT_HALL_SENSOR=y
+>>>>>>> 3ca63f2a25a3... defconfig: xiaomi: Use properly new config for hall sensor
 CONFIG_INPUT_KEYRESET=y
 # CONFIG_KEYBOARD_ATKBD is not set
 CONFIG_KEYBOARD_GPIO=y
