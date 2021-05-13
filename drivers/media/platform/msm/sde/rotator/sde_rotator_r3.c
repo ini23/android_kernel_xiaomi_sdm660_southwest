@@ -321,7 +321,7 @@ static void sde_hw_rotator_disable_irq(struct sde_hw_rotator *rot)
 		atomic_read(&rot->irq_enabled));
 
 	if (!atomic_read(&rot->irq_enabled)) {
-		SDEROT_ERR("irq %d is already disabled\n", rot->irq_num);
+		SDEROT_DBG("irq %d is already disabled\n", rot->irq_num);
 		return;
 	}
 
@@ -345,7 +345,7 @@ static void sde_hw_rotator_dump_status(struct sde_hw_rotator *rot)
 {
 	struct sde_rot_data_type *mdata = sde_rot_get_mdata();
 
-	SDEROT_ERR(
+	SDEROT_DBG(
 		"op_mode = %x, int_en = %x, int_status = %x\n",
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_CSR_REGDMA_OP_MODE),
@@ -354,7 +354,7 @@ static void sde_hw_rotator_dump_status(struct sde_hw_rotator *rot)
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_CSR_REGDMA_INT_STATUS));
 
-	SDEROT_ERR(
+	SDEROT_DBG(
 		"ts = %x, q0_status = %x, q1_status = %x, block_status = %x\n",
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_TIMESTAMP_REG),
@@ -365,19 +365,19 @@ static void sde_hw_rotator_dump_status(struct sde_hw_rotator *rot)
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_CSR_REGDMA_BLOCK_STATUS));
 
-	SDEROT_ERR(
+	SDEROT_DBG(
 		"invalid_cmd_offset = %x, fsm_state = %x\n",
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_CSR_REGDMA_INVALID_CMD_RAM_OFFSET),
 		SDE_ROTREG_READ(rot->mdss_base,
 			REGDMA_CSR_REGDMA_FSM_STATE));
 
-	SDEROT_ERR(
+	SDEROT_DBG(
 		"UBWC decode status = %x, UBWC encode status = %x\n",
 		SDE_ROTREG_READ(rot->mdss_base, ROT_SSPP_UBWC_ERROR_STATUS),
 		SDE_ROTREG_READ(rot->mdss_base, ROT_WB_UBWC_ERROR_STATUS));
 
-	SDEROT_ERR("VBIF XIN HALT status = %x VBIF AXI HALT status = %x\n",
+	SDEROT_DBG("VBIF XIN HALT status = %x VBIF AXI HALT status = %x\n",
 		SDE_VBIF_READ(mdata, MMSS_VBIF_XIN_HALT_CTRL1),
 		SDE_VBIF_READ(mdata, MMSS_VBIF_AXI_HALT_CTRL1));
 }
@@ -1046,10 +1046,10 @@ static u32 sde_hw_rotator_wait_done_no_regdma(
 			 * or rotator still busy
 			 */
 			if (status & ROT_BUSY_BIT)
-				SDEROT_ERR(
+				SDEROT_DBG(
 					"Timeout waiting for rotator done\n");
 			else if (status & ROT_ERROR_BIT)
-				SDEROT_ERR(
+				SDEROT_DBG(
 					"Rotator report error status\n");
 			else
 				SDEROT_WARN(
@@ -1069,9 +1069,9 @@ static u32 sde_hw_rotator_wait_done_no_regdma(
 				&& ((status & ROT_ERROR_BIT) == 0));
 
 		if (status & ROT_ERROR_BIT)
-			SDEROT_ERR("Rotator error\n");
+			SDEROT_DBG("Rotator error\n");
 		else if (status & ROT_BUSY_BIT)
-			SDEROT_ERR("Rotator busy\n");
+			SDEROT_DBG("Rotator busy\n");
 
 		SDE_ROTREG_WRITE(rot->mdss_base, ROTTOP_INTR_CLEAR,
 				ROT_DONE_CLEAR);
@@ -1123,18 +1123,18 @@ static u32 sde_hw_rotator_wait_done_regdma(
 			bool pending;
 
 			pending = sde_hw_rotator_pending_swts(rot, ctx, &swts);
-			SDEROT_ERR(
+			SDEROT_DBG(
 				"Timeout wait for regdma interrupt status, ts:0x%X/0x%X pending:%d\n",
 				ctx->timestamp, swts, pending);
 
 			if (status & REGDMA_WATCHDOG_INT)
-				SDEROT_ERR("REGDMA watchdog interrupt\n");
+				SDEROT_DBG("REGDMA watchdog interrupt\n");
 			else if (status & REGDMA_INVALID_DESCRIPTOR)
-				SDEROT_ERR("REGDMA invalid descriptor\n");
+				SDEROT_DBG("REGDMA invalid descriptor\n");
 			else if (status & REGDMA_INCOMPLETE_CMD)
-				SDEROT_ERR("REGDMA incomplete command\n");
+				SDEROT_DBG("REGDMA incomplete command\n");
 			else if (status & REGDMA_INVALID_CMD)
-				SDEROT_ERR("REGDMA invalid command\n");
+				SDEROT_DBG("REGDMA invalid command\n");
 
 			sde_hw_rotator_dump_status(rot);
 			status = ROT_ERROR_BIT;
@@ -1161,12 +1161,12 @@ static u32 sde_hw_rotator_wait_done_regdma(
 				((last_isr & REGDMA_INT_ERR_MASK) == 0));
 
 		if (last_isr & REGDMA_INT_ERR_MASK) {
-			SDEROT_ERR("Rotator error, ts:0x%X/0x%X status:%x\n",
+			SDEROT_DBG("Rotator error, ts:0x%X/0x%X status:%x\n",
 				ctx->timestamp, swts, last_isr);
 			sde_hw_rotator_dump_status(rot);
 			status = ROT_ERROR_BIT;
 		} else if (pending) {
-			SDEROT_ERR("Rotator timeout, ts:0x%X/0x%X status:%x\n",
+			SDEROT_DBG("Rotator timeout, ts:0x%X/0x%X status:%x\n",
 				ctx->timestamp, swts, last_isr);
 			sde_hw_rotator_dump_status(rot);
 			status = ROT_ERROR_BIT;
@@ -1224,7 +1224,7 @@ static int sde_hw_rotator_swts_create(struct sde_hw_rotator *rot)
 	handle = ion_alloc(rot->iclient, bufsize, SZ_4K,
 			ION_HEAP(ION_SYSTEM_HEAP_ID), 0);
 	if (IS_ERR_OR_NULL(handle)) {
-		SDEROT_ERR("ion memory allocation failed\n");
+		SDEROT_DBG("ion memory allocation failed\n");
 		return -ENOMEM;
 	}
 
@@ -1232,7 +1232,7 @@ static int sde_hw_rotator_swts_create(struct sde_hw_rotator *rot)
 	data->len = bufsize;
 	data->srcp_dma_buf = ion_share_dma_buf(rot->iclient, handle);
 	if (IS_ERR(data->srcp_dma_buf)) {
-		SDEROT_ERR("ion_dma_buf setup failed\n");
+		SDEROT_DBG("ion_dma_buf setup failed\n");
 		rc = -ENOMEM;
 		goto imap_err;
 	}
@@ -1242,7 +1242,7 @@ static int sde_hw_rotator_swts_create(struct sde_hw_rotator *rot)
 	data->srcp_attachment = sde_smmu_dma_buf_attach(data->srcp_dma_buf,
 			&rot->pdev->dev, SDE_IOMMU_DOMAIN_ROT_UNSECURE);
 	if (IS_ERR_OR_NULL(data->srcp_attachment)) {
-		SDEROT_ERR("sde_smmu_dma_buf_attach error\n");
+		SDEROT_DBG("sde_smmu_dma_buf_attach error\n");
 		rc = -ENOMEM;
 		goto err_put;
 	}
@@ -1250,7 +1250,7 @@ static int sde_hw_rotator_swts_create(struct sde_hw_rotator *rot)
 	data->srcp_table = dma_buf_map_attachment(data->srcp_attachment,
 			DMA_BIDIRECTIONAL);
 	if (IS_ERR_OR_NULL(data->srcp_table)) {
-		SDEROT_ERR("dma_buf_map_attachment error\n");
+		SDEROT_DBG("dma_buf_map_attachment error\n");
 		rc = -ENOMEM;
 		goto err_detach;
 	}
@@ -1287,7 +1287,7 @@ static int sde_hw_rotator_swts_map(struct sde_hw_rotator *rot)
 	if (mdata->wait_for_transition) {
 		rc = mdata->wait_for_transition(0, 0);
 		if (rc < 0) {
-			SDEROT_ERR("failed Secure wait for transition %d\n",
+			SDEROT_DBG("failed Secure wait for transition %d\n",
 					rc);
 			rc = -EPERM;
 			goto error;
@@ -1298,7 +1298,7 @@ static int sde_hw_rotator_swts_map(struct sde_hw_rotator *rot)
 			SDE_IOMMU_DOMAIN_ROT_UNSECURE, &data->addr,
 			&data->len, DMA_BIDIRECTIONAL);
 	if (IS_ERR_VALUE(rc)) {
-		SDEROT_ERR("smmu_map_dma_buf failed: (%d)\n", rc);
+		SDEROT_DBG("smmu_map_dma_buf failed: (%d)\n", rc);
 		goto err_unmap;
 	}
 
@@ -1306,7 +1306,7 @@ static int sde_hw_rotator_swts_map(struct sde_hw_rotator *rot)
 			DMA_FROM_DEVICE);
 	rot->swts_buffer = dma_buf_kmap(data->srcp_dma_buf, 0);
 	if (IS_ERR_OR_NULL(rot->swts_buffer)) {
-		SDEROT_ERR("ion kernel memory mapping failed\n");
+		SDEROT_DBG("ion kernel memory mapping failed\n");
 		rc = IS_ERR(rot->swts_buffer);
 		goto kmap_err;
 	}
@@ -1415,7 +1415,7 @@ void sde_hw_rotator_pre_pmevent(struct sde_rot_mgr *mgr, bool pmon)
 
 		if ((swts != hwts) && ((regdmasts & REGDMA_BUSY) ||
 					(rotsts & ROT_STATUS_MASK))) {
-			SDEROT_ERR(
+			SDEROT_DBG(
 				"Mismatch SWTS with HWTS: swts:0x%x, hwts:0x%x, regdma-sts:0x%x, rottop-sts:0x%x\n",
 				swts, hwts, regdmasts, rotsts);
 			SDEROT_EVTLOG_TOUT_HANDLER("rot", "vbif_dbg_bus",
@@ -1470,7 +1470,7 @@ static void sde_hw_rotator_destroy(struct sde_rot_mgr *mgr)
 	struct sde_hw_rotator *rot;
 
 	if (!mgr || !mgr->pdev || !mgr->hw_data) {
-		SDEROT_ERR("null parameters\n");
+		SDEROT_DBG("null parameters\n");
 		return;
 	}
 
@@ -1500,7 +1500,7 @@ static struct sde_rot_hw_resource *sde_hw_rotator_alloc_ext(
 	int ret = 0;
 
 	if (!mgr || !mgr->hw_data) {
-		SDEROT_ERR("null parameters\n");
+		SDEROT_DBG("null parameters\n");
 		return NULL;
 	}
 
@@ -1510,7 +1510,7 @@ static struct sde_rot_hw_resource *sde_hw_rotator_alloc_ext(
 	 */
 	resinfo = devm_kzalloc(&mgr->pdev->dev, sizeof(*resinfo), GFP_KERNEL);
 	if (!resinfo) {
-		SDEROT_ERR("Failed allocation HW rotator resource info\n");
+		SDEROT_DBG("Failed allocation HW rotator resource info\n");
 		return NULL;
 	}
 
@@ -1528,7 +1528,7 @@ static struct sde_rot_hw_resource *sde_hw_rotator_alloc_ext(
 		if (resinfo->rot->iclient == NULL) {
 			ret = sde_hw_rotator_swts_create(resinfo->rot);
 			if (ret) {
-				SDEROT_ERR("swts buffer create failed\n");
+				SDEROT_DBG("swts buffer create failed\n");
 				goto swts_fail;
 			}
 		}
@@ -1536,7 +1536,7 @@ static struct sde_rot_hw_resource *sde_hw_rotator_alloc_ext(
 		if (resinfo->rot->swts_buf.mapped == false) {
 			ret = sde_hw_rotator_swts_map(resinfo->rot);
 			if (ret) {
-				SDEROT_ERR("swts buffer map failed\n");
+				SDEROT_DBG("swts buffer map failed\n");
 				goto swts_fail;
 			}
 		}
@@ -1612,7 +1612,7 @@ static struct sde_hw_rotator_context *sde_hw_rotator_alloc_rotctx(
 	/* Allocate rotator context */
 	ctx = devm_kzalloc(&rot->pdev->dev, sizeof(*ctx), GFP_KERNEL);
 	if (!ctx) {
-		SDEROT_ERR("Failed allocation HW rotator context\n");
+		SDEROT_DBG("Failed allocation HW rotator context\n");
 		return NULL;
 	}
 
@@ -1696,7 +1696,7 @@ static int sde_hw_rotator_config(struct sde_rot_hw_resource *hw,
 	struct sde_rotation_item *item;
 
 	if (!hw || !entry) {
-		SDEROT_ERR("null hw resource/entry\n");
+		SDEROT_DBG("null hw resource/entry\n");
 		return -EINVAL;
 	}
 
@@ -1706,7 +1706,7 @@ static int sde_hw_rotator_config(struct sde_rot_hw_resource *hw,
 
 	ctx = sde_hw_rotator_alloc_rotctx(rot, hw, item->session_id);
 	if (!ctx) {
-		SDEROT_ERR("Failed allocating rotator context!!\n");
+		SDEROT_DBG("Failed allocating rotator context!!\n");
 		return -EINVAL;
 	}
 
@@ -1775,7 +1775,7 @@ static int sde_hw_rotator_config(struct sde_rot_hw_resource *hw,
 	sspp_cfg.bw = entry->perf->bw;
 	sspp_cfg.fmt = sde_get_format_params(item->input.format);
 	if (!sspp_cfg.fmt) {
-		SDEROT_ERR("null format\n");
+		SDEROT_DBG("null format\n");
 		return -EINVAL;
 	}
 	sspp_cfg.src_rect = &item->src_rect;
@@ -1796,7 +1796,7 @@ static int sde_hw_rotator_config(struct sde_rot_hw_resource *hw,
 	wb_cfg.bw = entry->perf->bw;
 	wb_cfg.fmt = sde_get_format_params(item->output.format);
 	if (!wb_cfg.fmt) {
-		SDEROT_ERR("Output format is NULL\n");
+		SDEROT_DBG("Output format is NULL\n");
 		return -EINVAL;
 	}
 	wb_cfg.dst_rect = &item->dst_rect;
@@ -1956,7 +1956,7 @@ static int sde_hw_rotator_kickoff(struct sde_rot_hw_resource *hw,
 	struct sde_hw_rotator_context *ctx;
 
 	if (!hw || !entry) {
-		SDEROT_ERR("null hw resource/entry\n");
+		SDEROT_DBG("null hw resource/entry\n");
 		return -EINVAL;
 	}
 
@@ -1966,7 +1966,7 @@ static int sde_hw_rotator_kickoff(struct sde_rot_hw_resource *hw,
 	/* Lookup rotator context from session-id */
 	ctx = sde_hw_rotator_get_ctx(rot, entry->item.session_id, hw->wb_id);
 	if (!ctx) {
-		SDEROT_ERR("Cannot locate rotator ctx from sesison id:%d\n",
+		SDEROT_DBG("Cannot locate rotator ctx from sesison id:%d\n",
 				entry->item.session_id);
 		return -EINVAL;
 	}
@@ -1993,7 +1993,7 @@ static int sde_hw_rotator_wait4done(struct sde_rot_hw_resource *hw,
 	int ret;
 
 	if (!hw || !entry) {
-		SDEROT_ERR("null hw resource/entry\n");
+		SDEROT_DBG("null hw resource/entry\n");
 		return -EINVAL;
 	}
 
@@ -2003,7 +2003,7 @@ static int sde_hw_rotator_wait4done(struct sde_rot_hw_resource *hw,
 	/* Lookup rotator context from session-id */
 	ctx = sde_hw_rotator_get_ctx(rot, entry->item.session_id, hw->wb_id);
 	if (!ctx) {
-		SDEROT_ERR("Cannot locate rotator ctx from sesison id:%d\n",
+		SDEROT_DBG("Cannot locate rotator ctx from sesison id:%d\n",
 				entry->item.session_id);
 		return -EINVAL;
 	}
@@ -2034,7 +2034,7 @@ static int sde_rotator_hw_rev_init(struct sde_hw_rotator *rot)
 	u32 hw_version;
 
 	if (!mdata) {
-		SDEROT_ERR("null rotator data\n");
+		SDEROT_DBG("null rotator data\n");
 		return -EINVAL;
 	}
 
@@ -2149,7 +2149,7 @@ static irqreturn_t sde_hw_rotator_regdmairq_handler(int irq, void *ptr)
 			ts   = (ts >> SDE_REGDMA_SWTS_SHIFT) &
 				SDE_REGDMA_SWTS_MASK;
 		} else {
-			SDEROT_ERR("unknown ISR status: isr=0x%X\n", isr);
+			SDEROT_DBG("unknown ISR status: isr=0x%X\n", isr);
 			goto done_isr_handle;
 		}
 		ctx = rot->rotCtx[q_id][ts & SDE_HW_ROT_REGDMA_SEG_MASK];
@@ -2181,7 +2181,7 @@ done_isr_handle:
 		 */
 		int i, j;
 
-		SDEROT_ERR(
+		SDEROT_DBG(
 			"regdma err isr:%X, wake up all waiting contexts\n",
 			isr);
 
@@ -2367,7 +2367,7 @@ static ssize_t sde_hw_rotator_show_state(struct sde_rot_mgr *mgr,
 	int i, j;
 
 	if (!mgr || !buf) {
-		SDEROT_ERR("null parameters\n");
+		SDEROT_DBG("null parameters\n");
 		return 0;
 	}
 
@@ -2477,7 +2477,7 @@ static int sde_hw_rotator_parse_dt(struct sde_hw_rotator *hw_data,
 		SDEROT_DBG("set to regdma mode %d\n", data);
 		hw_data->mode = data;
 	} else {
-		SDEROT_ERR("regdma mode out of range. default to regdma off\n");
+		SDEROT_DBG("regdma mode out of range. default to regdma off\n");
 		hw_data->mode = ROT_REGDMA_OFF;
 	}
 
@@ -2542,7 +2542,7 @@ int sde_rotator_r3_init(struct sde_rot_mgr *mgr)
 
 	rot->irq_num = platform_get_irq(mgr->pdev, 0);
 	if (rot->irq_num < 0) {
-		SDEROT_ERR("fail to get rotator irq\n");
+		SDEROT_DBG("fail to get rotator irq\n");
 	} else {
 		if (rot->mode == ROT_REGDMA_OFF)
 			ret = devm_request_threaded_irq(&mgr->pdev->dev,
@@ -2555,7 +2555,7 @@ int sde_rotator_r3_init(struct sde_rot_mgr *mgr)
 					sde_hw_rotator_regdmairq_handler,
 					NULL, 0, "sde_rotator_r3", rot);
 		if (ret) {
-			SDEROT_ERR("fail to request irq r:%d\n", ret);
+			SDEROT_DBG("fail to request irq r:%d\n", ret);
 			rot->irq_num = -1;
 		} else {
 			disable_irq(rot->irq_num);
