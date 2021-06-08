@@ -2718,7 +2718,9 @@ static inline void update_cfs_shares(struct sched_entity *se)
 
 int core_ctl_set_boost(bool boost)
 {
-	return 0;
+	u32 enabled = p->flags & PF_WAKE_UP_IDLE;
+
+	return !!enabled;
 }
 EXPORT_SYMBOL(core_ctl_set_boost);
 
