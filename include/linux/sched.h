@@ -2669,13 +2669,6 @@ extern void do_set_cpus_allowed(struct task_struct *p,
 extern int set_cpus_allowed_ptr(struct task_struct *p,
 				const struct cpumask *new_mask);
 extern bool cpupri_check_rt(void);
-static inline void set_wake_up_idle(bool enabled)
-{
-	if (enabled)
-		current->flags |= PF_WAKE_UP_IDLE;
-	else
-		current->flags &= ~PF_WAKE_UP_IDLE;
-}
 #else
 static inline void do_set_cpus_allowed(struct task_struct *p,
 				      const struct cpumask *new_mask)
@@ -2693,6 +2686,14 @@ static inline bool cpupri_check_rt(void)
 	return false;
 }
 #endif
+
+static inline void set_wake_up_idle(bool enabled)
+{
+	if (enabled)
+		current->flags |= PF_WAKE_UP_IDLE;
+	else
+		current->flags &= ~PF_WAKE_UP_IDLE;
+}
 
 #ifdef CONFIG_NO_HZ_COMMON
 void calc_load_enter_idle(void);
