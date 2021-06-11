@@ -405,6 +405,16 @@ KBUILD_CFLAGS += \
 	-Wno-parentheses-equality \
 	-Wno-gcc-compat \
 
+# Tell compiler to tune the performance of the code for a specified
+# target processor
+ifeq ($(cc-name),gcc)
+KBUILD_CFLAGS += -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc+crypto
+KBUILD_AFLAGS += -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc+crypto
+else ifeq ($(cc-name),clang)
+KBUILD_CFLAGS += -mcpu=cortex-a53 -march=armv8-a+crc+crypto
+KBUILD_AFLAGS += -mcpu=cortex-a53 -march=armv8-a+crc+crypto
+endif
+
 ifeq ($(TARGET_BOARD_TYPE),auto)
 KBUILD_CFLAGS    += -DCONFIG_PLATFORM_AUTO
 endif
