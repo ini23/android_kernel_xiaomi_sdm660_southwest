@@ -52,6 +52,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x0>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			qcom,ea = <&ea0>;
@@ -81,6 +82,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x1>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			qcom,ea = <&ea1>;
@@ -104,6 +106,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x2>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			qcom,ea = <&ea2>;
@@ -127,6 +130,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x3>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			qcom,ea = <&ea3>;
@@ -150,6 +154,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x100>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			qcom,ea = <&ea4>;
@@ -177,6 +182,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x101>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile2>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			qcom,ea = <&ea5>;
@@ -200,6 +206,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x102>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile3>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			qcom,ea = <&ea6>;
@@ -223,6 +230,7 @@
 			compatible = "arm,kryo";
 			reg = <0x0 0x103>;
 			enable-method = "psci";
+			#cooling-cells = <2>;
 			qcom,limits-info = <&mitigation_profile4>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			qcom,ea = <&ea7>;
