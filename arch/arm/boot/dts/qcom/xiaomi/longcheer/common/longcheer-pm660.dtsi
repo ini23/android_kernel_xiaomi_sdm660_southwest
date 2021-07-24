@@ -64,7 +64,6 @@
 	/delete-property/ qcom,auto-calibration-enable;
 	qcom,fs-curr-ua = <18000>;
 	qcom,en-cabc;
-	qcom,led-strings-list = [00 01];
 };
 
 &pm660l_flash0 {
