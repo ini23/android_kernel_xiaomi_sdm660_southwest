@@ -56,6 +56,8 @@ struct icnss_driver_ops {
 	int (*suspend_noirq)(struct device *dev);
 	int (*resume_noirq)(struct device *dev);
 	int (*uevent)(struct device *dev, struct icnss_uevent_data *uevent);
+	int (*idle_shutdown)(struct device *dev);
+	int (*idle_restart)(struct device *dev);
 };
 
 
@@ -163,4 +165,7 @@ extern int icnss_get_driver_load_cnt(void);
 extern void icnss_increment_driver_load_cnt(void);
 extern void icnss_set_cc_source(enum cnss_cc_src cc_source);
 extern enum cnss_cc_src icnss_get_cc_source(void);
+extern void icnss_block_shutdown(bool status);
+extern int icnss_idle_restart(struct device *dev);
+extern int icnss_idle_shutdown(struct device *dev);
 #endif /* _ICNSS_WLAN_H_ */
