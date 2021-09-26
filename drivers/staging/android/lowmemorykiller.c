@@ -68,7 +68,7 @@
 
 extern int extra_free_kbytes;
 
-static uint32_t lowmem_debug_level = 0
+static uint32_t lowmem_debug_level = 1;
 static short lowmem_adj[6] = {
 	0,
 	1,
@@ -237,7 +237,7 @@ module_param_named(adj_max_shift, adj_max_shift, short,
                    S_IRUGO | S_IWUSR);
 
 /* User knob to enable/disable adaptive lmk feature */
-static int enable_adaptive_lmk = 0;
+static int enable_adaptive_lmk;
 module_param_named(enable_adaptive_lmk, enable_adaptive_lmk, int,
 		   S_IRUGO | S_IWUSR);
 
