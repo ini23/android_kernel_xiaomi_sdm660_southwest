@@ -15,13 +15,9 @@ obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
 ccflags-y += $(call cc-option, -g0)
 ccflags-y += $(call cc-option, -Os)
 
+# Object files unique to zstd_compress and zstd_decompress
 zstd_compress-y := \
 		zstd_compress_module.o \
-		common/debug.o \
-		common/entropy_common.o \
-		common/error_private.o \
-		common/fse_decompress.o \
-		common/zstd_common.o \
 		compress/fse_compress.o \
 		compress/hist.o \
 		compress/huf_compress.o \
@@ -33,16 +29,31 @@ zstd_compress-y := \
 		compress/zstd_fast.o \
 		compress/zstd_lazy.o \
 		compress/zstd_ldm.o \
-		compress/zstd_opt.o \
+		compress/zstd_opt.o
 
 zstd_decompress-y := \
 		zstd_decompress_module.o \
+		decompress/huf_decompress.o \
+		decompress/zstd_ddict.o \
+		decompress/zstd_decompress.o \
+		decompress/zstd_decompress_block.o
+
+# These object files are shared between the modules.
+# Always add them to zstd_compress.
+# Unless both zstd_compress and zstd_decompress are built in
+# then also add them to zstd_decompress.
+zstd_compress-y += \
 		common/debug.o \
 		common/entropy_common.o \
 		common/error_private.o \
 		common/fse_decompress.o \
-		common/zstd_common.o \
-		decompress/huf_decompress.o \
-		decompress/zstd_ddict.o \
-		decompress/zstd_decompress.o \
-		decompress/zstd_decompress_block.o \
+		common/zstd_common.o
+
+ifneq ($(CONFIG_ZSTD_COMPRESS)$(CONFIG_ZSTD_DECOMPRESS),yy)
+	zstd_decompress-y += \
+		common/debug.o \
+		common/entropy_common.o \
+		common/error_private.o \
+		common/fse_decompress.o \
+		common/zstd_common.o
+endif
