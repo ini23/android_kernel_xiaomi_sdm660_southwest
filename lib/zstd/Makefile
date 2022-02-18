@@ -11,7 +11,7 @@
 obj-$(CONFIG_ZSTD_COMPRESS) += zstd_compress.o
 obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
 
-ccflags-y += -O3
+ccflags-y += -Wno-error=deprecated-declarations
 
 # Object files unique to zstd_compress and zstd_decompress
 zstd_compress-y := \
@@ -32,6 +32,7 @@ zstd_compress-y := \
 zstd_decompress-y := \
 		zstd_decompress_module.o \
 		decompress/huf_decompress.o \
+		decompress/huf_decompress_amd64.o \
 		decompress/zstd_ddict.o \
 		decompress/zstd_decompress.o \
 		decompress/zstd_decompress_block.o
