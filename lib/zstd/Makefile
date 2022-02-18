@@ -14,6 +14,7 @@ obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
 # optimise for size
 ccflags-y += $(call cc-option, -g0)
 ccflags-y += $(call cc-option, -Os)
+ccflags-y += -Wno-error=deprecated-declarations
 
 # Object files unique to zstd_compress and zstd_decompress
 zstd_compress-y := \
@@ -34,6 +35,7 @@ zstd_compress-y := \
 zstd_decompress-y := \
 		zstd_decompress_module.o \
 		decompress/huf_decompress.o \
+		decompress/huf_decompress_amd64.o \
 		decompress/zstd_ddict.o \
 		decompress/zstd_decompress.o \
 		decompress/zstd_decompress_block.o
