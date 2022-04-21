@@ -11,9 +11,7 @@
 obj-$(CONFIG_ZSTD_COMPRESS) += zstd_compress.o
 obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
 
-# optimise for size
-ccflags-y += $(call cc-option, -g0)
-ccflags-y += $(call cc-option, -Os)
+ccflags-y += -O3
 
 # Object files unique to zstd_compress and zstd_decompress
 zstd_compress-y := \
