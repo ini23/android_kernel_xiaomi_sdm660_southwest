@@ -80,7 +80,7 @@
 #include <linux/kcov.h>
 #include <linux/cpufreq_times.h>
 #include <linux/devfreq_boost.h>
-#include <linux/simple_lmk.h>
+
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
 #include <asm/uaccess.h>
