@@ -319,7 +319,7 @@ static ssize_t inst_info_read(struct file *file, char __user *buf,
 	ssize_t len = 0;
 
 	if (!idata || !idata->core || !idata->inst) {
-		dprintk(VIDC_ERR, "%s: Invalid params\n", __func__);
+//		dprintk(VIDC_ERR, "%s: Invalid params\n", __func__);
 		return 0;
 	}
 
@@ -336,13 +336,13 @@ static ssize_t inst_info_read(struct file *file, char __user *buf,
 	mutex_unlock(&core->lock);
 
 	if (!inst) {
-		dprintk(VIDC_ERR, "%s: Instance has become obsolete", __func__);
+//		dprintk(VIDC_ERR, "%s: Instance has become obsolete", __func__);
 		return 0;
 	}
 
 	dbuf = kzalloc(MAX_DBG_BUF_SIZE, GFP_KERNEL);
 	if (!dbuf) {
-		dprintk(VIDC_ERR, "%s: Allocation failed!\n", __func__);
+//		dprintk(VIDC_ERR, "%s: Allocation failed!\n", __func__);
 		len = -ENOMEM;
 		goto failed_alloc;
 	}
@@ -425,7 +425,7 @@ failed_alloc:
 
 static int inst_info_release(struct inode *inode, struct file *file)
 {
-	dprintk(VIDC_INFO, "Release inode ptr: %pK\n", inode->i_private);
+//	dprintk(VIDC_INFO, "Release inode ptr: %pK\n", inode->i_private);
 	file->private_data = NULL;
 	return 0;
 }
@@ -444,14 +444,14 @@ struct dentry *msm_vidc_debugfs_init_inst(struct msm_vidc_inst *inst,
 	struct core_inst_pair *idata = NULL;
 
 	if (!inst) {
-		dprintk(VIDC_ERR, "Invalid params, inst: %pK\n", inst);
+//		dprintk(VIDC_ERR, "Invalid params, inst: %pK\n", inst);
 		goto exit;
 	}
 	snprintf(debugfs_name, MAX_DEBUGFS_NAME, "inst_%pK", inst);
 
 	idata = kzalloc(sizeof(struct core_inst_pair), GFP_KERNEL);
 	if (!idata) {
-		dprintk(VIDC_ERR, "%s: Allocation failed!\n", __func__);
+//		dprintk(VIDC_ERR, "%s: Allocation failed!\n", __func__);
 		goto exit;
 	}
 
@@ -460,14 +460,14 @@ struct dentry *msm_vidc_debugfs_init_inst(struct msm_vidc_inst *inst,
 
 	dir = debugfs_create_dir(debugfs_name, parent);
 	if (IS_ERR_OR_NULL(dir)) {
-		dprintk(VIDC_ERR, "Failed to create debugfs for msm_vidc\n");
+//		dprintk(VIDC_ERR, "Failed to create debugfs for msm_vidc\n");
 		goto failed_create_dir;
 	}
 
 	info = debugfs_create_file("info", S_IRUGO, dir,
 			idata, &inst_info_fops);
 	if (IS_ERR_OR_NULL(info)) {
-		dprintk(VIDC_ERR, "debugfs_create_file: fail\n");
+//		dprintk(VIDC_ERR, "debugfs_create_file: fail\n");
 		goto failed_create_file;
 	}
 
