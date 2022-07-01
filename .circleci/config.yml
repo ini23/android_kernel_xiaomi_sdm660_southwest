@@ -13,7 +13,7 @@ jobs:
            cd kernel
            git clone https://github.com/PREDATOR-project/myscripts.git -b master
            chmod +x myscripts/clang-setup.sh
-           chmod +x myscripts/new-base.sh
+           chmod +x myscripts/new-base-qti.sh
            source ./myscripts/clang-setup.sh
            ./myscripts/new-base-qti.sh
 workflows:
