@@ -68,7 +68,7 @@ static unsigned int saved_count;
 
 static DEFINE_SPINLOCK(events_lock);
 
-static void pm_wakeup_timer_fn(struct timer_list *t);
+static void pm_wakeup_timer_fn(unsigned long data);
 
 static LIST_HEAD(wakeup_sources);
 
@@ -189,7 +189,7 @@ void wakeup_source_add(struct wakeup_source *ws)
 		return;
 
 	spin_lock_init(&ws->lock);
-	timer_setup(&ws->timer, pm_wakeup_timer_fn, 0);
+	setup_timer(&ws->timer, pm_wakeup_timer_fn, (unsigned long)ws);
 	ws->active = false;
 	ws->last_time = ktime_get();
 
@@ -503,7 +503,8 @@ static bool wakeup_source_not_registered(struct wakeup_source *ws)
 	 * Use timer struct to check if the given source is initialized
 	 * by wakeup_source_add.
 	 */
-	return ws->timer.function != (TIMER_FUNC_TYPE)pm_wakeup_timer_fn;
+	return ws->timer.function != pm_wakeup_timer_fn ||
+		   ws->timer.data != (unsigned long)ws;
 }
 
 /*
@@ -804,9 +805,9 @@ EXPORT_SYMBOL_GPL(pm_relax);
  * in @data if it is currently active and its timer has not been canceled and
  * the expiration time of the timer is not in future.
  */
-static void pm_wakeup_timer_fn(struct timer_list *t)
+static void pm_wakeup_timer_fn(unsigned long data)
 {
-	struct wakeup_source *ws = from_timer(ws, t, timer);
+	struct wakeup_source *ws = (struct wakeup_source *)data;
 	unsigned long flags;
 
 	spin_lock_irqsave(&ws->lock, flags);
