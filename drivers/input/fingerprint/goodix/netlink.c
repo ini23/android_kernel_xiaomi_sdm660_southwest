@@ -44,9 +44,11 @@ int sendnlmsg(char *msg)
 	memcpy(NLMSG_DATA(nlh), msg, sizeof(char));
 	pr_debug("send message: %d\n", *(char *)NLMSG_DATA(nlh));
 
-	ret = nlmsg_unicast(nl_sk, skb, pid);
-	if (ret)
-		pr_err("failed to send msg error:0x%x\n", ret);
+	ret = netlink_unicast(nl_sk, skb, pid, MSG_DONTWAIT);
+	if (ret > 0)
+		ret = 0;
+
+	return ret;
 }
 
 static void nl_data_ready(struct sk_buff *__skb)
