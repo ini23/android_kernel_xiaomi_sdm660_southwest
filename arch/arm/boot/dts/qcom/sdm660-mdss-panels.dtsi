@@ -149,7 +149,7 @@
 	qcom,mdss-dsi-panel-on-check-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
-	qcom,mdss-dsi-min-refresh-rate = <24>;
+	qcom,mdss-dsi-min-refresh-rate = <40>;
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 };
 
