@@ -1425,7 +1425,4 @@ static inline void ufshcd_vops_pm_qos_req_end(struct ufs_hba *hba,
 		hba->var->pm_qos_vops->req_end(hba, req, lock);
 }
 
-extern int ufshcd_read_desc_param(struct ufs_hba *hba, enum desc_idn desc_id,
-				  int desc_index, u32 param_offset,
-				  u8 *param_read_buf, u32 param_size);
 #endif /* End of Header */
