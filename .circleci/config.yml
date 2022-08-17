@@ -9,13 +9,13 @@ jobs:
           no_output_timeout: 50m
           command: |
            apt-get -y update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get -y install bc build-essential bison flex zip gcc clang libc6 curl libstdc++6 git wget libssl-dev zstd openjdk-11-jdk openjdk-11-jre && apt-get -y install python
-           git clone https://github.com/ini23/android_kernel_xiaomi_sdm660_southwest -b 9.0 kernel
+           git clone https://github.com/ini23/android_kernel_xiaomi_sdm660_southwest -b base kernel
            cd kernel
            git clone https://github.com/PREDATOR-project/myscripts.git -b master
            chmod +x myscripts/gcc-setup.sh
-           chmod +x myscripts/los-base.sh
+           chmod +x myscripts/los-hmp.sh
            source ./myscripts/gcc-setup.sh
-           ./myscripts/los-base.sh
+           ./myscripts/los-hmp.sh
 workflows:
   version: 2.1
   cooking:
