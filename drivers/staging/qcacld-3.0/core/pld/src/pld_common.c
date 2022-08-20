@@ -1568,9 +1568,6 @@ void pld_block_shutdown(struct device *dev, bool status)
 	enum pld_bus_type type = pld_get_bus_type(dev);
 
 	switch (type) {
-	case PLD_BUS_TYPE_SNOC:
-		pld_snoc_block_shutdown(status);
-		break;
 	default:
 		break;
 	}
