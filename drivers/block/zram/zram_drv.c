@@ -1343,7 +1343,7 @@ compress_again:
 		return ret;
 	}
 
-	if (comp_len >= huge_class_size)
+	if (comp_len >= max_zpage_size)
 		comp_len = PAGE_SIZE;
 
 	/*
